@@ -1,0 +1,7 @@
+.upload-file-label {
+  font-weight: bold;
+}
+
+.custom-file-label {
+  transform: translateY(30px);
+}

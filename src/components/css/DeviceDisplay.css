@@ -1,0 +1,14 @@
+.display-image {
+  position: absolute;
+}
+
+.device-image {
+  max-height: 30vh;
+  max-width: 100%;
+}
+
+.imageDisplay {
+  position: relative;
+  display: inline-block;
+  margin: 25px 0;
+}
