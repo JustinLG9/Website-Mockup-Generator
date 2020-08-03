@@ -3,59 +3,59 @@ import "./css/FileUpload.css";
 
 export default function FileUpload({ uploadFunc }) {
   return (
-    <div class="custom-photos-container">
-      <div class="col-12">
-        <p class="upload-file-label">Or Upload Your Own Photos</p>
+    <div className="custom-photos-container">
+      <div className="col-12">
+        <p className="upload-file-label">Or Upload Your Own Photos</p>
       </div>
-      <div class="row justify-content-around">
-        <div class="col-md-3">
-          <p class="upload-header">Mobile</p>
+      <div className="row justify-content-around">
+        <div className="col-md-3">
+          <p className="upload-header">Mobile</p>
           <input
             type="file"
             accept=".jpg, .png"
-            class="custom-file-input"
+            className="custom-file-input"
             id="upload-mobile-file"
             onChange={(event) => uploadFunc(event, "mobile")}
           />
           <label
-            for="upload-mobile-file"
-            class="custom-file-label"
+            htmlFor="upload-mobile-file"
+            className="custom-file-label"
             style={{ textAlign: "left" }}
           >
             Choose Image
           </label>
         </div>
 
-        <div class="col-md-3">
-          <p class="upload-header">Tablet</p>
+        <div className="col-md-3">
+          <p className="upload-header">Tablet</p>
           <input
             type="file"
             accept=".jpg, .png"
-            class="custom-file-input"
+            className="custom-file-input"
             id="upload-tablet-file"
             onChange={(event) => uploadFunc(event, "tablet")}
           />
           <label
-            for="upload-tablet-file"
-            class="custom-file-label"
+            htmlFor="upload-tablet-file"
+            className="custom-file-label"
             style={{ textAlign: "left" }}
           >
             Choose Image
           </label>
         </div>
 
-        <div class="col-md-3">
-          <p class="upload-header">Desktop</p>
+        <div className="col-md-3">
+          <p className="upload-header">Desktop</p>
           <input
             type="file"
             accept=".jpg, .png"
-            class="custom-file-input"
+            className="custom-file-input"
             id="upload-desktop-file"
             onChange={(event) => uploadFunc(event, "desktop")}
           />
           <label
-            for="upload-desktop-file"
-            class="custom-file-label"
+            htmlFor="upload-desktop-file"
+            className="custom-file-label"
             style={{ textAlign: "left" }}
           >
             Choose Image

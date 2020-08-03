@@ -1,0 +1,70 @@
+.multi-device-display {
+  position: relative;
+  width: 100%;
+  padding: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(calc(-12px + 5vw));
+}
+
+.multi-display-image {
+  position: absolute;
+}
+
+.multi-device-image {
+  max-width: 100%;
+}
+
+.single-device {
+  position: absolute;
+}
+
+/* Desktop-Macbook-Tablet-Mobile */
+.DMTM-desktop {
+  width: 50%;
+  left: 16%;
+  top: -6%;
+}
+
+.DMTM-laptop {
+  width: 45%;
+  left: 50%;
+  top: 25%;
+}
+
+.DMTM-tablet {
+  width: 17%;
+  left: 5%;
+  top: 20%;
+}
+
+.DMTM-mobile {
+  width: 10%;
+  left: 17%;
+  top: 37%;
+}
+
+/* Desktop-Tablet-Mobile */
+.DTM-desktop {
+  width: 50%;
+  left: 30%;
+  top: -6%;
+}
+
+.DTM-tablet {
+  width: 17%;
+  left: 19%;
+  top: 20%;
+}
+
+.DTM-mobile {
+  width: 10%;
+  left: 31%;
+  top: 37%;
+}
+
+.download-all-btn {
+  position: relative;
+  margin: 20px 0 !important;
+}

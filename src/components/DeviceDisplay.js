@@ -1,25 +1,30 @@
 import React from "react";
 import "./css/DeviceDisplay.css";
 
+import LoadingShader from "./LoadingShader.js";
+
 export default function DeviceDisplay({
   title,
   deviceImageSrc,
-  deviceScreenCords,
+  deviceImageID,
+  deviceScreenCoords,
   deviceDimensions,
   displayImageSrc,
   displayImageID,
   buttonText,
   largeImage,
   downloadFunc,
+  downloading,
 }) {
-  const top = (deviceScreenCords.Y1 / deviceDimensions.height) * 100 + "%";
-  const left = (deviceScreenCords.X1 / deviceDimensions.width) * 100 + "%";
+  const top = (deviceScreenCoords.Y1 / deviceDimensions.height) * 100 + "%";
+  const left = (deviceScreenCoords.X1 / deviceDimensions.width) * 100 + "%";
   const width =
-    ((deviceScreenCords.X2 - deviceScreenCords.X1) / deviceDimensions.width) *
+    ((deviceScreenCoords.X2 - deviceScreenCoords.X1) / deviceDimensions.width) *
       100 +
     "%";
   const height =
-    ((deviceScreenCords.Y2 - deviceScreenCords.Y1) / deviceDimensions.height) *
+    ((deviceScreenCoords.Y2 - deviceScreenCoords.Y1) /
+      deviceDimensions.height) *
       100 +
     "%";
   let displayImageStyle = {
@@ -30,25 +35,34 @@ export default function DeviceDisplay({
   };
 
   return (
-    <div class={`${largeImage ? "col-sm-12 col-lg-6" : "col-6"}`}>
-      <div class="imageDisplay">
-        <img src={deviceImageSrc} class="device-image" alt="Device" />
+    <div className={`${largeImage ? "col-sm-12 col-lg-6" : "col-6"}`}>
+      <div className="imageDisplay">
+        <img
+          src={deviceImageSrc}
+          className="device-image"
+          id={deviceImageID}
+          alt="Device"
+          data-dimension={
+            deviceDimensions.width + "," + deviceDimensions.height
+          }
+        />
         <img
           src={displayImageSrc}
           style={displayImageStyle}
           alt="Display"
-          class="display-image"
+          className={`display-image ${displayImageID}`}
           id={displayImageID}
         />
       </div>
       <button
-        class="btn btn-primary btn-block"
+        className="btn btn-primary btn-block col-lg-8"
         onClick={() => {
-          console.log(title);
-          downloadFunc(title);
+          if (!downloading) downloadFunc(title);
         }}
+        style={{ position: "relative", margin: "0 auto" }}
       >
         {buttonText}
+        {downloading && <LoadingShader />}
       </button>
     </div>
   );

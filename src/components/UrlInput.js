@@ -1,39 +1,40 @@
 import React, { useState } from "react";
-import { getUrlImages } from "../functions.js";
+import LoadingShader from "./LoadingShader.js";
 
-export default function UrlInput({ updateAllImagesFunc }) {
+export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
   const [url, setUrl] = useState("");
 
   return (
-    <div class="website-url mb-3">
-      <div class="col-12">
-        <label for="website-url-input" class="website-url-label">
+    <div className="website-url mb-3">
+      <div className="col-12">
+        <label htmlFor="website-url-input" className="website-url-label">
           <strong>Enter Your Website URL</strong>
         </label>
       </div>
-      <input
-        type="text"
-        placeholder="https://www.google.com"
-        class="form-control website-url-input"
-        id="website-url-input"
-        onChange={(event) => setUrl(event.target.value)}
-      />
       <div class="row justify-content-center">
+        <input
+          type="text"
+          placeholder="https://www.google.com"
+          className="form-control website-url-input col-md-8"
+          id="website-url-input"
+          onChange={(event) => setUrl(event.target.value)}
+        />
+      </div>
+      <div className="row justify-content-center">
         <button
           type="submit"
           id="website-url-submit"
-          class="btn btn-success btn-block col-md-8"
+          className="btn btn-success btn-block col-md-8"
           title="Submit"
-          style={{ marginTop: "20px" }}
-          onClick={() => maybeGetUrlImages()}
+          style={{ marginTop: "20px", position: "relative" }}
+          onClick={() => {
+            if (!gettingImages) getUrlImagesAndUpdateFunc(url);
+          }}
         >
           Submit
+          {gettingImages && <LoadingShader />}
         </button>
       </div>
     </div>
   );
-
-  function maybeGetUrlImages() {
-    getUrlImages(url, updateAllImagesFunc);
-  }
 }
