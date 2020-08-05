@@ -10,12 +10,13 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
       <div className="col-12">
         <label htmlFor="website-url-input" className="website-url-label">
           <strong>Enter Website URL</strong>
+          <p>Must include the url scheme (Usually https://)</p>
         </label>
       </div>
       <div className="row justify-content-center">
         <input
           type="text"
-          placeholder="www.espn.com"
+          placeholder="https://www.espn.com"
           className="form-control website-url-input col-md-8"
           id="website-url-input"
           onChange={(event) => setUrl(event.target.value)}

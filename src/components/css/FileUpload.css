@@ -5,3 +5,8 @@
 .custom-file-label {
   transform: translateY(30px);
 }
+
+.custom-file-input:hover,
+.custom-file-label:hover {
+  cursor: pointer;
+}
