@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import "./App.css";
@@ -23,24 +23,7 @@ import {
 let thum = require("thum.io");
 
 function App() {
-  const [downloadingSingle, setDownloadingSingle] = useState([
-    false, // mobile - black
-    false, // mobile - white
-    false, // tablet - black
-    false, // tablet - white
-    false, // laptop
-    false, // desktop
-    false, // all devices - black
-    false, // all devices - white
-    false, // DTM - black
-    false, // DTM - white
-  ]);
-  const [downloadingAll, setDownloadingAll] = useState(false);
-  const [gettingUrlImages, setGettingUrlImages] = useState(false);
-  const totalNumberOfPictures = downloadingSingle.length;
-  let imagesLoaded = 0;
-
-  const imageData = {
+  const [imageData, setImageData] = useState({
     mobileBlack: {
       title: "mobileBlack",
       deviceImgSrc: require("./deviceImages/mobile-black.png"),
@@ -113,7 +96,23 @@ function App() {
       filename: "desktop.png",
       largeImage: true,
     },
-  };
+  });
+  const [downloadingSingle, setDownloadingSingle] = useState([
+    false, // mobile - black
+    false, // mobile - white
+    false, // tablet - black
+    false, // tablet - white
+    false, // laptop
+    false, // desktop
+    false, // all devices - black
+    false, // all devices - white
+    false, // DTM - black
+    false, // DTM - white
+  ]);
+  const [downloadingAll, setDownloadingAll] = useState(false);
+  const [gettingUrlImages, setGettingUrlImages] = useState(false);
+  const totalNumberOfPictures = downloadingSingle.length;
+  let imagesLoaded = 0;
 
   function downloadCanvas(canvas, filename) {
     let e;
@@ -308,17 +307,16 @@ function App() {
     );
   }
 
+  useEffect(() => {
+    console.log(gettingUrlImages);
+  }, [gettingUrlImages]);
+
   function getUrlImagesAndUpdate(url) {
     setGettingUrlImages(true);
-    console.log(gettingUrlImages);
-
-    let fullUrl = url;
-    if (fullUrl.slice(0, 8) !== "https://") {
-      fullUrl = "https://" + fullUrl;
-    }
 
     let thumURLBase = thum.getThumURL({
-      url: fullUrl,
+      url: url,
+      maxAge: 24,
       auth: {
         type: "md5",
         secret: "devicedisplay",
@@ -354,17 +352,16 @@ function App() {
     const desktopImg = document.getElementById(imageData.desktop.displayImgID);
 
     function onImageLoad() {
-      console.log(loadedImages, gettingUrlImages);
       if (++loadedImages === 3) {
         setGettingUrlImages(false);
-        mobileImg.removeEventListener("load", onImageLoad());
-        tabletImg.removeEventListener("load", onImageLoad());
-        desktopImg.removeEventListener("load", onImageLoad());
+        mobileImg.removeEventListener("load", onImageLoad);
+        tabletImg.removeEventListener("load", onImageLoad);
+        desktopImg.removeEventListener("load", onImageLoad);
       }
     }
-    mobileImg.addEventListener("load", onImageLoad());
-    tabletImg.addEventListener("load", onImageLoad());
-    desktopImg.addEventListener("load", onImageLoad());
+    mobileImg.addEventListener("load", onImageLoad);
+    tabletImg.addEventListener("load", onImageLoad);
+    desktopImg.addEventListener("load", onImageLoad);
 
     updateAllImages(thumURLMobile, thumURLTablet, thumURLDesktop);
   }
@@ -381,7 +378,9 @@ function App() {
         const elems = Array.from(document.getElementsByClassName(className));
 
         elems.forEach((elem) => {
-          imageData[imageDataName].displayImgSrc = newSrc;
+          let tempImageData = imageData;
+          tempImageData[imageDataName].displayImgSrc = newSrc;
+          setImageData(tempImageData);
           elem.src = newSrc;
           if (anonymous) {
             elem.crossOrigin = "anonymous";
@@ -459,19 +458,22 @@ function App() {
 
     let drawnImages = 0;
 
-    images.forEach(({ title, width, xStart, yStart }) => {
-      const { deviceImgID, displayImgID, deviceScreenCoords } = imageData[
-        title
-      ];
+    // Initialize all images before loop to ensure proper chaining (one starts drawing after another finishes)
+    let deviceImgs = [];
+    images.forEach(() => {
+      deviceImgs.push(new Image());
+    });
+
+    images.forEach(({ title, width, xStart, yStart }, index) => {
+      const { displayImgID, deviceScreenCoords } = imageData[title];
 
       // Draw the device image on its own canvas
       let canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      const deviceImgElem = document.getElementById(deviceImgID);
       const displayImgElem = document.getElementById(displayImgID);
 
-      let deviceImg = new Image();
+      let deviceImg = deviceImgs[index];
       deviceImg.addEventListener(
         "load",
         () => {
@@ -488,7 +490,6 @@ function App() {
         },
         false
       );
-      deviceImg.src = deviceImgElem.src;
 
       // Draw display image second
       let displayImg = new Image();
@@ -537,13 +538,24 @@ function App() {
               reupdateDownloadSingleState[downloadingIndex] = false;
               setDownloadingSingle(reupdateDownloadSingleState);
             }
+          } else {
+            if (deviceImgs.length > index + 1) {
+              const nextDeviceImgTitle = images[index + 1].title;
+              const nextDeviceImgID = imageData[nextDeviceImgTitle].deviceImgID;
+              const nextDeviceImgElem = document.getElementById(
+                nextDeviceImgID
+              );
+              deviceImgs[index + 1].src = nextDeviceImgElem.src;
+            }
           }
         },
         false
       );
-    });
 
-    // document.getElementById("test").appendChild(multiCanvas);
+      // Set source of first device image to start chain
+      const firstPictureToDrawID = imageData[images[0].title].deviceImgID;
+      deviceImgs[0].src = document.getElementById(firstPictureToDrawID).src;
+    });
   }
 
   return (
