@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import "./css/MultiDeviceDisplays.css";
 
 import LoadingShader from "./LoadingShader.js";
@@ -85,12 +86,14 @@ export default function DesktopMacbookTabletMobile({
         <button
           className="btn btn-primary btn-block col-4 download-all-btn"
           onClick={() => {
-            if (!downloadingBlack)
+            if (!downloadingBlack) {
+              firebase.analytics().logEvent("threeDevicesBlack");
               downloadFunc(
                 black3DeviceDownloadInfo,
                 "3-devices-black.png",
                 downloadingBlackIndex
               );
+            }
           }}
         >
           Download 3 Devices - Black
@@ -100,12 +103,14 @@ export default function DesktopMacbookTabletMobile({
         <button
           className="btn btn-primary btn-block col-4 download-all-btn"
           onClick={() => {
-            if (!downloadingWhite)
+            if (!downloadingWhite) {
+              firebase.analytics().logEvent("threeDevicesWhite");
               downloadFunc(
                 white3DeviceDownloadInfo,
                 "3-devices-white.png",
                 downloadingWhiteIndex
               );
+            }
           }}
         >
           Download 3 Devices - White

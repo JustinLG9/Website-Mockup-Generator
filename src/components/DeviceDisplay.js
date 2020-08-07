@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import "./css/DeviceDisplay.css";
 
 import LoadingShader from "./LoadingShader.js";
@@ -57,7 +58,10 @@ export default function DeviceDisplay({
       <button
         className="btn btn-primary btn-block col-lg-8"
         onClick={() => {
-          if (!downloading) downloadFunc(title);
+          if (!downloading) {
+            firebase.analytics().logEvent(title);
+            downloadFunc(title);
+          }
         }}
         style={{ position: "relative", margin: "0 auto" }}
       >

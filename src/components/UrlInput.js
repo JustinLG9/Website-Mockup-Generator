@@ -38,7 +38,7 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
         </button>
       </div>
       <div className="row justify-content-center">
-        <p class="text-danger" style={{ margin: "10px 0" }}>
+        <p className="text-danger" style={{ margin: "10px 0" }}>
           {errorMessage}
         </p>
       </div>

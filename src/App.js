@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import "./App.css";
@@ -306,10 +306,6 @@ function App() {
       false
     );
   }
-
-  useEffect(() => {
-    console.log(gettingUrlImages);
-  }, [gettingUrlImages]);
 
   function getUrlImagesAndUpdate(url) {
     setGettingUrlImages(true);
