@@ -23,13 +23,13 @@ import {
 let thum = require("thum.io");
 
 function App() {
-  const [imageData, setImageData] = useState({
+  let imageData = {
     mobileBlack: {
       title: "mobileBlack",
       deviceImgSrc: require("./deviceImages/mobile-black.png"),
       deviceImgID: "mobile-black-device-img",
-      deviceScreenCoords: { X1: 28, Y1: 129, X2: 504, Y2: 978 },
-      deviceDimensions: { width: 539, height: 1091 },
+      deviceScreenCoords: { X1: 26, Y1: 129, X2: 504, Y2: 978 },
+      deviceDimensions: { width: 537, height: 1091 },
       displayImgSrc: require("./deviceImages/espnMobile.png"),
       displayImgID: "mobile-black-display-img",
       buttonText: "Download Mobile - Black",
@@ -65,7 +65,7 @@ function App() {
       deviceImgSrc: require("./deviceImages/tablet-white.png"),
       deviceImgID: "tablet-white-device-img",
       deviceScreenCoords: { X1: 115, Y1: 215, X2: 2180, Y2: 2965 },
-      deviceDimensions: { width: 2293, height: 3180 },
+      deviceDimensions: { width: 2293, height: 3175 },
       displayImgSrc: require("./deviceImages/espnTablet.png"),
       displayImgID: "tablet-white-display-img",
       buttonText: "Download Tablet - White",
@@ -88,15 +88,15 @@ function App() {
       title: "desktop",
       deviceImgSrc: require("./deviceImages/desktop.png"),
       deviceImgID: "desktop-device-img",
-      deviceScreenCoords: { X1: 116, Y1: 108, X2: 1600, Y2: 941 },
-      deviceDimensions: { width: 1716, height: 1361 },
+      deviceScreenCoords: { X1: 116, Y1: 106, X2: 1600, Y2: 941 },
+      deviceDimensions: { width: 1716, height: 1360 },
       displayImgSrc: require("./deviceImages/espnDesktop.png"),
       displayImgID: "desktop-display-img",
       buttonText: "Download Desktop",
       filename: "desktop.png",
       largeImage: true,
     },
-  });
+  };
   const [downloadingSingle, setDownloadingSingle] = useState([
     false, // mobile - black
     false, // mobile - white
@@ -365,6 +365,7 @@ function App() {
   function updateAllImages(mobileSrc, tabletSrc, desktopSrc) {
     updateImages("mobile", mobileSrc, true);
     updateImages("tablet", tabletSrc, true);
+    updateImages("laptop", desktopSrc, true);
     updateImages("desktop", desktopSrc, true);
   }
 
@@ -376,7 +377,8 @@ function App() {
         elems.forEach((elem) => {
           let tempImageData = imageData;
           tempImageData[imageDataName].displayImgSrc = newSrc;
-          setImageData(tempImageData);
+          imageData = tempImageData;
+          console.log(elem);
           elem.src = newSrc;
           if (anonymous) {
             elem.crossOrigin = "anonymous";
@@ -384,6 +386,7 @@ function App() {
             elem.removeAttribute("crossOrigin");
           }
         });
+        console.log(imageData);
       });
     }
 
@@ -414,12 +417,17 @@ function App() {
         ]);
         break;
       }
-      case "desktop": {
+      case "laptop": {
         updateImageDataAndElems([
           {
             className: "laptop-display-img",
             imageDataName: "laptop",
           },
+        ]);
+        break;
+      }
+      case "desktop": {
+        updateImageDataAndElems([
           {
             className: "desktop-display-img",
             imageDataName: "desktop",
@@ -559,7 +567,6 @@ function App() {
       <NavBar />
       <div className="container editorContainer">
         <div className="col-md-10 m-auto">
-          <HowTo />
           <div className="image-selectors">
             <UrlInput
               getUrlImagesAndUpdateFunc={getUrlImagesAndUpdate}

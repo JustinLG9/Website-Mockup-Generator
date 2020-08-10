@@ -11,6 +11,7 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
         <label htmlFor="website-url-input" className="website-url-label">
           <strong>Enter Website URL</strong>
           <p>Must include the url scheme (Usually https://)</p>
+          <p>Can take up to a minute to capture screenshots</p>
         </label>
       </div>
       <div className="row justify-content-center">

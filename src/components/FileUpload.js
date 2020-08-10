@@ -8,7 +8,7 @@ export default function FileUpload({ uploadFunc }) {
         <p className="upload-file-label">Or Upload Your Own Photos</p>
       </div>
       <div className="row justify-content-around">
-        <div className="col-md-3">
+        <div className="col-md-2">
           <p className="upload-header">Mobile</p>
           <input
             type="file"
@@ -20,13 +20,13 @@ export default function FileUpload({ uploadFunc }) {
           <label
             htmlFor="upload-mobile-file"
             className="custom-file-label"
-            style={{ textAlign: "left" }}
+            style={{ textAlign: "left", overflow: "hidden" }}
           >
             Choose Image
           </label>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-2">
           <p className="upload-header">Tablet</p>
           <input
             type="file"
@@ -38,13 +38,31 @@ export default function FileUpload({ uploadFunc }) {
           <label
             htmlFor="upload-tablet-file"
             className="custom-file-label"
-            style={{ textAlign: "left" }}
+            style={{ textAlign: "left", overflow: "hidden" }}
           >
             Choose Image
           </label>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-2">
+          <p className="upload-header">Laptop</p>
+          <input
+            type="file"
+            accept=".jpg, .png"
+            className="custom-file-input"
+            id="upload-laptop-file"
+            onChange={(event) => uploadFunc(event, "laptop")}
+          />
+          <label
+            htmlFor="upload-laptop-file"
+            className="custom-file-label"
+            style={{ textAlign: "left", overflow: "hidden" }}
+          >
+            Choose Image
+          </label>
+        </div>
+
+        <div className="col-md-2">
           <p className="upload-header">Desktop</p>
           <input
             type="file"
@@ -56,7 +74,7 @@ export default function FileUpload({ uploadFunc }) {
           <label
             htmlFor="upload-desktop-file"
             className="custom-file-label"
-            style={{ textAlign: "left" }}
+            style={{ textAlign: "left", overflow: "hidden" }}
           >
             Choose Image
           </label>

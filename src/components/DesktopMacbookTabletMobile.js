@@ -13,16 +13,7 @@ export default function DesktopMacbookTabletMobile({
   downloadingBlack,
   downloadingWhite,
 }) {
-  function SingleDeviceDisplay({ imageData, ...props }) {
-    const {
-      deviceImgSrc,
-      deviceImgID,
-      deviceScreenCoords,
-      deviceDimensions,
-      displayImgSrc,
-      displayImgID,
-    } = imageData;
-
+  function getDisplayImgStyle(deviceScreenCoords, deviceDimensions) {
     const top = (deviceScreenCoords.Y1 / deviceDimensions.height) * 100 + "%";
     const left = (deviceScreenCoords.X1 / deviceDimensions.width) * 100 + "%";
     const width =
@@ -35,53 +26,106 @@ export default function DesktopMacbookTabletMobile({
         deviceDimensions.height) *
         100 +
       "%";
-    let displayImageStyle = {
+
+    return {
       top: top,
       left: left,
       width: width,
       height: height,
     };
-
-    return (
-      <div className="imageDisplay" {...props}>
-        <img
-          src={deviceImgSrc}
-          className="multi-device-image"
-          id={deviceImgID}
-          alt="Device"
-          data-dimension={
-            deviceDimensions.width + "," + deviceDimensions.height
-          }
-        />
-        <img
-          src={displayImgSrc}
-          style={displayImageStyle}
-          alt="Display"
-          className={`multi-display-image ${displayImgID}`}
-        />
-      </div>
-    );
   }
 
   return (
     <div>
       <div className="multi-device-display DMTM-black">
-        <SingleDeviceDisplay
-          imageData={imageData.desktop}
-          className="DMTM-desktop imageDisplay single-device"
-        />
-        <SingleDeviceDisplay
-          imageData={imageData.laptop}
-          className="DMTM-laptop imageDisplay single-device"
-        />
-        <SingleDeviceDisplay
-          imageData={imageData.tabletBlack}
-          className="DMTM-tablet imageDisplay single-device"
-        />
-        <SingleDeviceDisplay
-          imageData={imageData.mobileBlack}
-          className="DMTM-mobile imageDisplay single-device"
-        />
+        <div className="DMTM-desktop imageDisplay single-device">
+          <img
+            src={imageData.desktop.deviceImgSrc}
+            className="multi-device-image"
+            id={imageData.desktop.deviceImgID}
+            alt="Device"
+            data-dimension={
+              imageData.desktop.deviceDimensions.width +
+              "," +
+              imageData.desktop.deviceDimensions.height
+            }
+          />
+          <img
+            src={imageData.desktop.displayImgSrc}
+            style={getDisplayImgStyle(
+              imageData.desktop.deviceScreenCoords,
+              imageData.desktop.deviceDimensions
+            )}
+            alt="Display"
+            className={`multi-display-image ${imageData.desktop.displayImgID}`}
+          />
+        </div>
+        <div className="DMTM-laptop imageDisplay single-device">
+          <img
+            src={imageData.laptop.deviceImgSrc}
+            className="multi-device-image"
+            id={imageData.laptop.deviceImgID}
+            alt="Device"
+            data-dimension={
+              imageData.laptop.deviceDimensions.width +
+              "," +
+              imageData.laptop.deviceDimensions.height
+            }
+          />
+          <img
+            src={imageData.laptop.displayImgSrc}
+            style={getDisplayImgStyle(
+              imageData.laptop.deviceScreenCoords,
+              imageData.laptop.deviceDimensions
+            )}
+            alt="Display"
+            className={`multi-display-image ${imageData.laptop.displayImgID}`}
+          />
+        </div>
+        <div className="DMTM-tablet imageDisplay single-device">
+          <img
+            src={imageData.tabletBlack.deviceImgSrc}
+            className="multi-device-image"
+            id={imageData.tabletBlack.deviceImgID}
+            alt="Device"
+            data-dimension={
+              imageData.tabletBlack.deviceDimensions.width +
+              "," +
+              imageData.tabletBlack.deviceDimensions.height
+            }
+          />
+          <img
+            src={imageData.tabletBlack.displayImgSrc}
+            style={getDisplayImgStyle(
+              imageData.tabletBlack.deviceScreenCoords,
+              imageData.tabletBlack.deviceDimensions
+            )}
+            alt="Display"
+            className={`multi-display-image ${imageData.tabletBlack.displayImgID}`}
+          />
+        </div>
+        <div className="DMTM-mobile imageDisplay single-device">
+          <img
+            src={imageData.mobileBlack.deviceImgSrc}
+            className="multi-device-image"
+            id={imageData.mobileBlack.deviceImgID}
+            alt="Device"
+            data-dimension={
+              imageData.mobileBlack.deviceDimensions.width +
+              "," +
+              imageData.mobileBlack.deviceDimensions.height
+            }
+          />
+          <img
+            src={imageData.mobileBlack.displayImgSrc}
+            style={getDisplayImgStyle(
+              imageData.mobileBlack.deviceScreenCoords,
+              imageData.mobileBlack.deviceDimensions
+            )}
+            alt="Display"
+            className={`multi-display-image ${imageData.mobileBlack.displayImgID}`}
+          />
+        </div>
       </div>
       <div className="row justify-content-around">
         <button
