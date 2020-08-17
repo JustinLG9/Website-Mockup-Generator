@@ -1,6 +1,6 @@
 # Website-Mockup-Generator
 
-![Portfolio](./src/images/portfolio.png)
+![Portfolio](./src/deviceImages/portfolio.png)
 
 Website Mockup Generator is an extremely easy to use mockup generator for any website and it's completely free! Simply type in your URL and mockups are automatically created. The mockup shown here was created from the site!
 
