@@ -12,7 +12,7 @@ export default function FileUpload({ uploadFunc }) {
           <p className="upload-header">Mobile</p>
           <input
             type="file"
-            accept=".jpg, .png"
+            accept=".jpg, .png, .jpeg"
             className="custom-file-input"
             id="upload-mobile-file"
             onChange={(event) => uploadFunc(event, "mobile")}
@@ -30,7 +30,7 @@ export default function FileUpload({ uploadFunc }) {
           <p className="upload-header">Tablet</p>
           <input
             type="file"
-            accept=".jpg, .png"
+            accept=".jpg, .png, .jpeg"
             className="custom-file-input"
             id="upload-tablet-file"
             onChange={(event) => uploadFunc(event, "tablet")}
@@ -48,7 +48,7 @@ export default function FileUpload({ uploadFunc }) {
           <p className="upload-header">Laptop</p>
           <input
             type="file"
-            accept=".jpg, .png"
+            accept=".jpg, .png, .jpeg"
             className="custom-file-input"
             id="upload-laptop-file"
             onChange={(event) => uploadFunc(event, "laptop")}
@@ -66,7 +66,7 @@ export default function FileUpload({ uploadFunc }) {
           <p className="upload-header">Desktop</p>
           <input
             type="file"
-            accept=".jpg, .png"
+            accept=".jpg, .png, .jpeg"
             className="custom-file-input"
             id="upload-desktop-file"
             onChange={(event) => uploadFunc(event, "desktop")}
