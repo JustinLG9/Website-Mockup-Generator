@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LoadingShader from "./LoadingShader.js";
+import "./css/UrlInput.css";
 
 export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
   const [url, setUrl] = useState("");
@@ -10,14 +11,17 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
       <div className="col-12">
         <label htmlFor="website-url-input" className="website-url-label">
           <strong>Enter Website URL</strong>
-          <p>Must include the url scheme (Usually https://)</p>
           <p>Can take up to a minute to capture screenshots</p>
         </label>
       </div>
-      <div className="row justify-content-center">
+      <div className="justify-content-center url-domain-container">
+        <select className="form-control" id="scheme-dropdown">
+          <option>https://</option>
+          <option>http://</option>
+        </select>
         <input
           type="text"
-          placeholder="https://www.espn.com"
+          placeholder="www.espn.com"
           className="form-control website-url-input col-md-8"
           id="website-url-input"
           onChange={(event) => setUrl(event.target.value)}
@@ -47,7 +51,7 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
   );
 
   function maybeGetUrlImagesAndUpdate(url) {
-    const isStringInArray = (str, array) => {
+    function isStringInArray(str, array) {
       array.forEach((popularScheme) => {
         if (str === popularScheme) {
           return true;
@@ -55,12 +59,14 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
       });
 
       return false;
-    };
+    }
 
     function getPosition(string, subString, index) {
       return string.split(subString, index).join(subString).length;
     }
 
+    const schemeValue = document.getElementById("scheme-dropdown").value;
+    url = schemeValue + url;
     setErrorMessage("");
 
     // Check if input is in url format before calling Thum.io API
@@ -69,13 +75,6 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
 
       getUrlImagesAndUpdateFunc(url);
     } catch (_) {
-      const popularUrlSchemes = [
-        "file://",
-        "ftp://",
-        "http://",
-        "https://",
-        "telnet://",
-      ];
       const popularTopLevelDomains = [
         ".com",
         ".net",
@@ -105,7 +104,6 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
       ];
 
       let error = "Invalid URL: ";
-      const urlScheme = url.split(0, url.indexOf("//") + 2);
       const urlTopLevelDomain = url.split(
         getPosition(url, ".", 2),
         url.indexOf("/", getPosition(url, ".", 2))
@@ -113,8 +111,6 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
 
       if (!url) {
         error += "Please enter a URL";
-      } else if (!isStringInArray(urlScheme, popularUrlSchemes)) {
-        error += "Likely an invalid scheme (Most websites use https://)";
       } else if (
         !isStringInArray(urlTopLevelDomain, popularTopLevelDomains) &&
         url.indexOf("/", getPosition(url, ".", 2)) !== -1

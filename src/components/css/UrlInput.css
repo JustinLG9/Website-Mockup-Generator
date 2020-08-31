@@ -1,0 +1,19 @@
+.url-domain-container {
+  display: flex;
+}
+
+#website-url-input {
+  flex: 1;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#scheme-dropdown {
+  width: 100px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#scheme-dropdown:hover {
+  cursor: pointer;
+}

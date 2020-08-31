@@ -6,6 +6,7 @@ export default function FileUpload({ uploadFunc }) {
     <div className="custom-photos-container">
       <div className="col-12">
         <p className="upload-file-label">Or Upload Your Own Photos</p>
+        <p>(Accepts .png, .jpg, and .jpeg)</p>
       </div>
       <div className="row justify-content-around">
         <div className="col-md-2">
