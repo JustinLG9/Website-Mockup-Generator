@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import firebase from "firebase/app";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import "./App.css";
 
 import NavBar from "./components/NavBar.js";
-import HowTo from "./components/HowTo.js";
 import UrlInput from "./components/UrlInput.js";
 import FileUpload from "./components/FileUpload.js";
 import DownloadAllBtn from "./components/DownloadAllBtn.js";
@@ -194,6 +194,7 @@ function App() {
   }
 
   function downloadAllImages() {
+    firebase.analytics().logEvent("downloadAll");
     setDownloadingAll(true);
     let zip = new JSZip();
     imagesLoaded = 0;
@@ -308,6 +309,7 @@ function App() {
   }
 
   function getUrlImagesAndUpdate(url) {
+    firebase.analytics().logEvent("getUrlImagesAttempted");
     setGettingUrlImages(true);
 
     let thumURLBase = thum.getThumURL({
@@ -351,6 +353,7 @@ function App() {
       if (++loadedImages === 3) {
         setGettingUrlImages(false);
         document.getElementById("downloadAllBtn").scrollIntoView();
+        firebase.analytics().logEvent("getUrlImagesSuccess");
         mobileImg.removeEventListener("load", onImageLoad);
         tabletImg.removeEventListener("load", onImageLoad);
         desktopImg.removeEventListener("load", onImageLoad);
