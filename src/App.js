@@ -350,6 +350,7 @@ function App() {
     function onImageLoad() {
       if (++loadedImages === 3) {
         setGettingUrlImages(false);
+        document.getElementById("downloadAllBtn").scrollIntoView();
         mobileImg.removeEventListener("load", onImageLoad);
         tabletImg.removeEventListener("load", onImageLoad);
         desktopImg.removeEventListener("load", onImageLoad);
@@ -579,6 +580,7 @@ function App() {
           <DownloadAllBtn
             downloadFunc={downloadAllImages}
             downloading={downloadingAll}
+            id="downloadAllBtn"
           />
           <div className="multi-device-displays">
             <DesktopMacbookTabletMobileDisplay

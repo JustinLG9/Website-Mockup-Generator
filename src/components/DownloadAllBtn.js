@@ -1,9 +1,13 @@
 import React from "react";
 import LoadingShader from "./LoadingShader.js";
 
-export default function DownloadAllBtn({ downloadFunc, downloading }) {
+export default function DownloadAllBtn({
+  downloadFunc,
+  downloading,
+  ...props
+}) {
   return (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center" {...props}>
       <div className="col-md-8">
         <button
           id="download-btn"
