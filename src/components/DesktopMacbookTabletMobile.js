@@ -149,7 +149,7 @@ export default function DesktopMacbookTabletMobile({
           className="btn btn-primary btn-block col-4 download-all-btn"
           onClick={() => {
             if (!downloadingWhite) {
-              firebase.analytics().logEvent("allDevicesBlack");
+              firebase.analytics().logEvent("allDevicesWhite");
               downloadFunc(
                 whiteAllDownloadInfo,
                 "all-devices-white.png",
