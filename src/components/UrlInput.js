@@ -15,7 +15,12 @@ export default function UrlInput({ getUrlImagesAndUpdateFunc, gettingImages }) {
         </label>
       </div>
       <div className="justify-content-center url-domain-container">
-        <select name="URL Scheme" className="form-control" id="scheme-dropdown">
+        <select
+          aria-label="URL Scheme"
+          name="URL Scheme"
+          className="form-control"
+          id="scheme-dropdown"
+        >
           <option>https://</option>
           <option>http://</option>
         </select>
