@@ -40,6 +40,11 @@ export default function Footer() {
               rel="noopener noreferrer"
             >
               Buy me a Coffee
+              <img
+                src={require("../deviceImages/ko-fi.png")}
+                alt="Ko-Fi Logo"
+                style={{ height: "16px", marginLeft: "4px" }}
+              />
             </a>
           </p>
         </div>
