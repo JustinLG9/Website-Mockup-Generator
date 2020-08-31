@@ -382,7 +382,6 @@ function App() {
           let tempImageData = imageData;
           tempImageData[imageDataName].displayImgSrc = newSrc;
           imageData = tempImageData;
-          console.log(elem);
           elem.src = newSrc;
           if (anonymous) {
             elem.crossOrigin = "anonymous";
@@ -390,7 +389,6 @@ function App() {
             elem.removeAttribute("crossOrigin");
           }
         });
-        console.log(imageData);
       });
     }
 
@@ -569,78 +567,80 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <div className="container editorContainer">
-        <div className="col-md-10 m-auto">
-          <div className="image-selectors">
-            <UrlInput
-              getUrlImagesAndUpdateFunc={getUrlImagesAndUpdate}
-              gettingImages={gettingUrlImages}
+      <main>
+        <div className="container editorContainer">
+          <div className="col-md-10 m-auto">
+            <div className="image-selectors">
+              <UrlInput
+                getUrlImagesAndUpdateFunc={getUrlImagesAndUpdate}
+                gettingImages={gettingUrlImages}
+              />
+              <div className="file-upload">
+                <FileUpload uploadFunc={uploadAndRenderFile} />
+              </div>
+            </div>
+            <DownloadAllBtn
+              downloadFunc={downloadAllImages}
+              downloading={downloadingAll}
+              id="downloadAllBtn"
             />
-            <div className="file-upload">
-              <FileUpload uploadFunc={uploadAndRenderFile} />
+            <div className="multi-device-displays">
+              <DesktopMacbookTabletMobileDisplay
+                imageData={imageData}
+                downloadingBlackIndex={6}
+                downloadingWhiteIndex={7}
+                downloadingBlack={downloadingSingle[6]}
+                downloadingWhite={downloadingSingle[7]}
+                downloadFunc={createMultiDeviceCanvasAndMaybeDownload}
+              />
+              <DesktopTabletMobile
+                imageData={imageData}
+                downloadingBlackIndex={8}
+                downloadingWhiteIndex={9}
+                downloadingBlack={downloadingSingle[8]}
+                downloadingWhite={downloadingSingle[9]}
+                downloadFunc={createMultiDeviceCanvasAndMaybeDownload}
+              />
+            </div>
+            <div className="row single-device-displays">
+              {Object.values(imageData).map(
+                (
+                  {
+                    title,
+                    deviceImgSrc,
+                    deviceImgID,
+                    deviceScreenCoords,
+                    deviceDimensions,
+                    displayImgSrc,
+                    displayImgID,
+                    buttonText,
+                    filename,
+                    largeImage,
+                  },
+                  index
+                ) => {
+                  return (
+                    <DeviceDisplay
+                      title={title}
+                      deviceImageSrc={deviceImgSrc}
+                      deviceImageID={deviceImgID}
+                      deviceScreenCoords={deviceScreenCoords}
+                      deviceDimensions={deviceDimensions}
+                      displayImageSrc={displayImgSrc}
+                      displayImageID={displayImgID}
+                      buttonText={buttonText}
+                      largeImage={largeImage}
+                      downloadFunc={downloadIndividual}
+                      downloading={downloadingSingle[index]}
+                      key={filename}
+                    />
+                  );
+                }
+              )}
             </div>
           </div>
-          <DownloadAllBtn
-            downloadFunc={downloadAllImages}
-            downloading={downloadingAll}
-            id="downloadAllBtn"
-          />
-          <div className="multi-device-displays">
-            <DesktopMacbookTabletMobileDisplay
-              imageData={imageData}
-              downloadingBlackIndex={6}
-              downloadingWhiteIndex={7}
-              downloadingBlack={downloadingSingle[6]}
-              downloadingWhite={downloadingSingle[7]}
-              downloadFunc={createMultiDeviceCanvasAndMaybeDownload}
-            />
-            <DesktopTabletMobile
-              imageData={imageData}
-              downloadingBlackIndex={8}
-              downloadingWhiteIndex={9}
-              downloadingBlack={downloadingSingle[8]}
-              downloadingWhite={downloadingSingle[9]}
-              downloadFunc={createMultiDeviceCanvasAndMaybeDownload}
-            />
-          </div>
-          <div className="row single-device-displays">
-            {Object.values(imageData).map(
-              (
-                {
-                  title,
-                  deviceImgSrc,
-                  deviceImgID,
-                  deviceScreenCoords,
-                  deviceDimensions,
-                  displayImgSrc,
-                  displayImgID,
-                  buttonText,
-                  filename,
-                  largeImage,
-                },
-                index
-              ) => {
-                return (
-                  <DeviceDisplay
-                    title={title}
-                    deviceImageSrc={deviceImgSrc}
-                    deviceImageID={deviceImgID}
-                    deviceScreenCoords={deviceScreenCoords}
-                    deviceDimensions={deviceDimensions}
-                    displayImageSrc={displayImgSrc}
-                    displayImageID={displayImgID}
-                    buttonText={buttonText}
-                    largeImage={largeImage}
-                    downloadFunc={downloadIndividual}
-                    downloading={downloadingSingle[index]}
-                    key={filename}
-                  />
-                );
-              }
-            )}
-          </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );
