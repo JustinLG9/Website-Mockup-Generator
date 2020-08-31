@@ -43,7 +43,11 @@ export default function Footer() {
               <img
                 src={require("../deviceImages/ko-fi.png")}
                 alt="Ko-Fi Logo"
-                style={{ height: "16px", marginLeft: "4px" }}
+                style={{
+                  height: "12px",
+                  marginLeft: "4px",
+                  marginBottom: "2px",
+                }}
               />
             </a>
           </p>
