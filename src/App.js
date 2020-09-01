@@ -309,7 +309,7 @@ function App() {
   }
 
   function getUrlImagesAndUpdate(url) {
-    firebase.analytics().logEvent("getUrlImagesAttempted");
+    firebase.analytics().logEvent("getUrlImagesAttempted", { url: url });
     setGettingUrlImages(true);
 
     let thumURLBase = thum.getThumURL({
@@ -353,7 +353,7 @@ function App() {
       if (++loadedImages === 3) {
         setGettingUrlImages(false);
         document.getElementById("downloadAllBtn").scrollIntoView();
-        firebase.analytics().logEvent("getUrlImagesSuccess");
+        firebase.analytics().logEvent("getUrlImagesSuccess", { url: url });
         mobileImg.removeEventListener("load", onImageLoad);
         tabletImg.removeEventListener("load", onImageLoad);
         desktopImg.removeEventListener("load", onImageLoad);
